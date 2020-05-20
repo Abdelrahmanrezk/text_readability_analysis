@@ -1,0 +1,427 @@
+/*
+    before start to search about any page or section make $ like ### $start home_page
+
+    find ***************************** for media query code like ****** Start Media Query
+
+    find --------- for media query {page_name section_name} like ##### Start Media home page text_generator 
+
+    find --------- for media query {page_name}  like ##### Start Media home page 
+
+    find ######### Start {page_name} for code of specific page like: #############Start home
+
+    find --------- Start {page_name section_name}  like -------- Start home page text_generator
+
+    find --------- Start Media {page_name section_name}  like -------- Start Media home page text_generator
+
+    
+    Each section start from one line css property to two lines property and so on like:
+
+    .home_page  .toggle_head, .home_page  .toggle_head { margin-bottom: 50px }
+
+    .home_page .user_input_anaysis .readability_gradeLevels p svg{ 
+      margin-right: 15px;
+      margin-left: 15px 
+
+    }
+
+    .home_page .user_input_anaysis .tab_list_content .nav-tabs .nav-link{
+      color: #fff;
+      font-size: 18px;
+      padding: 15px;
+    }
+
+    each section seprated by  #########################################################################################
+
+*/
+
+
+
+/*
+  #################### $Start Main strucure style ####################
+*/
+
+html, body, div, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, i, dl, dt, dd, ol, ul, li, fieldset,form, label,legend, 
+table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details,
+embed, figure, figcaption, footer,header, hgroup, menu, nav, 
+section, summary, time, mark, audio, video{
+    outline: none !important;
+}
+
+body{ background: #333 }
+
+input, button{ outline: 0 }
+
+li{ list-style-type: none; }
+
+dl, ol, ul{ margin: 0; }
+
+li{ list-style-type: none; }
+
+li a{ color: inherit; }
+
+.button_hover_style{ transition: .5s }
+
+.button_hover_style:hover{ color:#fff; }
+
+.RubikMonoOne-font{ font-family: 'Rubik Mono One', sans-serif; }
+
+.Montserrat-font{ font-family: 'Montserrat', sans-serif; }
+
+
+
+@font-face {
+  font-family: "Anton-Regular";
+  src: url("../fonts/Anton-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Cairo-Black";
+  src: url("../fonts/Cairo-Black.ttf");
+}
+.btn.focus,
+.btn:focus {
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.navbar-toggler:focus, 
+.navbar-toggler:hover,
+a:hover,
+a:focus {
+  outline: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+/*
+  #################### End Main strucure style ####################
+*/
+
+
+/*---------------------------------------------- Another Page---------------------------------------------------------*/
+
+/*
+  ###################### $Start home_page Style  ####################
+*/
+
+/* Homepage main structure  */
+
+.home_page{ padding: 30px; } 
+
+/* --------------------
+------------------------ Bloc Code of home page  Text text_generator section 
+-------------------- */
+
+.home_page .heading span {
+    position: relative;
+    top: 20px;
+    display: inline-block;
+    animation: bounce .3s ease infinite alternate;
+    
+    font-family: "Cairo-Black";
+    font-size: 30px;
+    color: #FFF;
+    text-shadow: 0 1px 0 #000,
+                 0 2px 0 #000,
+                 0 3px 0 #000,
+                 0 4px 0 #255,
+                 0 5px 0 #255,
+                 0 6px 0 transparent,
+                 0 7px 0 transparent,
+                 0 8px 0 transparent,
+                 0 9px 0 transparent,
+                 0 10px 10px rgba(0, 0, 0, .4);
+}
+
+.home_page .heading span:nth-child(2) { animation-delay: .1s; }
+.home_page .heading span:nth-child(3) { animation-delay: .2s; }
+.home_page .heading span:nth-child(4) { animation-delay: .3s; }
+.home_page .heading span:nth-child(5) { animation-delay: .4s; }
+.home_page .heading span:nth-child(6) { animation-delay: .5s; }
+.home_page .heading span:nth-child(7) { animation-delay: .6s; }
+.home_page .heading span:nth-child(8) { animation-delay: .7s; }
+.home_page .heading span:nth-child(9) { animation-delay: .8s; }
+.home_page .heading span:nth-child(10) { animation-delay: .9s; }
+.home_page .heading span:nth-child(11) { animation-delay: 1.0s; }
+.home_page .heading span:nth-child(12) { animation-delay: 1.1s; }
+.home_page .heading span:nth-child(13) { animation-delay: 1.2s; }
+.home_page .heading span:nth-child(14) { animation-delay: 1.3s; }
+.home_page .heading span:nth-child(15) { animation-delay: 1.4s; }
+.home_page .heading span:nth-child(16) { animation-delay: 1.5s; }
+@keyframes bounce {
+  100% {
+    top: -20px;
+    text-shadow: 0 1px 0 #000,
+                 0 2px 0 #000,
+                 0 3px 0 #000,
+                 0 4px 0 #000,
+                 0 5px 0 #255,
+                 0 6px 0 #255,
+                 0 7px 0 #255,
+                 0 8px 0 #255,
+                 0 9px 0 #255,
+                 0 50px 25px rgba(0, 0, 0, .4);
+  }
+}
+
+
+/* --------------------
+------------------------ Bloc Code of home page  Text text_generator section 
+-------------------- */
+
+
+/*
+  -------------------- $Start home_page text_generator section  --------------------
+*/
+.home_page .heading{ margin-top: 40px }
+
+.home_page .text_generator{
+  text-align: center;
+  position: relative;
+}
+
+
+.home_page .content .text_content { 
+  margin-top: 50px;
+  line-height: 2.5;
+  font-size:16px;
+  font-family: "Anton-Regular";
+}
+
+.home_page .text_generator .content .text_content{
+  width: 50em;
+  min-height: 12em;
+  margin: auto;
+  margin-top: 20px;
+  visibility: visible;
+}
+
+/*
+  -------------------- End home_page text_generator section  --------------------
+*/
+
+/* ######################################################################################### */
+
+
+/*
+  -------------------- $Start home_page user_input_form section  --------------------
+*/
+
+.home_page .user_input_form textarea{
+  box-shadow: 0px 0px 5px #282424;
+  outline: none;
+  border: 1px solid #ddd;
+}
+
+.home_page .user_input_form .submit_btns button:hover{
+  transform: scale(1.2,1);
+  letter-spacing: 2px;
+  background-image:  linear-gradient(to right, white , black);
+  color: #000
+}
+
+
+.home_page .user_input_form .submit_btns{
+  width: 100%;
+  margin: auto;
+  display: block;
+  text-align: center;
+}
+
+.home_page  .error_input.error_message{
+  padding: 5px;
+  margin: 10px;
+  text-align: c;
+  font-size: 25px;
+  padding: .50rem 1rem;
+  border-radius: .25rem;
+  color: #721c24;
+  border-color: #f5c6cb;
+  background: #f8d7da
+}
+
+
+.home_page .user_input_form .submit_btns button{
+  width: 35%;
+  color: #fff;
+  background: #000;
+  padding: 8px 15px;
+  border: none;
+  box-sizing: 0 0 11px #fff;
+  transition: .5s;
+  font-size: 20px;
+  margin:20px;
+}
+
+
+/*
+  -------------------- End home_page user_input_form section  --------------------
+*/
+
+/* ######################################################################################### */
+
+
+/*
+  -------------------- $Start home_page user_input_anaysis section  --------------------
+*/
+
+
+.home_page .nav-tabs{ border-bottom: none }
+
+.navbar .navbar-brand img{ height: 2.5em }
+
+.home_page .user_input_form .user_input_result .highlighted_word{ color: red; }
+
+.home_page  .toggle_head, .home_page  .toggle_head { margin-bottom: 50px }
+
+.home_page .user_input_anaysis .readability_gradeLevels p svg{ margin-right: 15px }
+
+.home_page .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover{ border: 1px solid #fff; }
+
+.home_page .user_input_anaysis .tab_list_content .nav-tabs .nav-link{
+  color: #fff;
+  font-size: 18px;
+  padding: 15px;
+}
+
+.home_page .statics_calculations p span,
+.home_page .text_composition p span,
+.home_page .readability_gradeLevels p span{
+  color: #fff;
+  position: absolute;
+  right: 2%;
+  font-weight: bold;
+}
+
+.home_page .user_input_anaysis .tab_list_content{
+  position: relative;
+  overflow: hidden;
+  height: 400px;
+  z-index: 999;
+  margin-top: -60px; 
+}
+
+.home_page .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+  color: #fff;
+  background: #333;
+  box-shadow: 0px 0px 10px #555;
+  border-radius:none;
+  border:none;
+  border-top: 2px solid #fff
+}
+
+
+.home_page .statics_calculations p ,
+.home_page .text_composition p ,
+.home_page .readability_gradeLevels p  {
+  color: #fff;
+  padding: 10px;
+  font-size: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 5px #9f9f95;
+  text-align: left;
+  position: relative;
+}
+
+
+
+/*
+  -------------------- End home_page user_input_anaysis section  --------------------
+*/
+
+
+/* ######################################################################################### */
+
+
+
+/*
+  ###################### End home_page Style  ####################
+*/
+
+
+
+/* ********************************
+
+********** $Start Media Query Responsive Design 
+
+******************************************/
+
+/*
+  -------------------- $Start Media home page text_generator section  --------------------
+*/
+
+@media(max-width:991px){
+
+.home_page .text_generator .content .text_content{ width: 100% }
+
+}
+
+@media(max-width:767px){
+
+.home_page .text_generator .content .text_content{ min-height: 18em; }
+
+}
+
+/*
+  -------------------- End Media home page text_generator section  --------------------
+*/
+
+/* ######################################################################################### */
+
+/*
+  -------------------- $Start Media home page user_input_form section Section  --------------------
+*/
+
+
+@media(max-width:991px){
+.home_page .user_input_form button{
+  margin-bottom: 80px;
+  width: auto;
+  padding: 3px;
+  font-size: 12px;
+
+}
+
+}
+
+/*
+  -------------------- End Media home page user_input_form section Section  --------------------
+*/
+
+/* ######################################################################################### */
+
+/*
+  -------------------- $Start Media home page user_input_anaysis section Section  --------------------
+*/
+
+
+
+@media(max-width:991px){
+
+.home_page .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link{
+  font-size: 10px;
+  padding: 5px;
+}
+.home_page .statics_calculations p ,
+.home_page .text_composition p ,
+.home_page .readability_gradeLevels p{
+
+  padding: 5px;
+  font-size: 12px;
+}
+
+}
+
+
+/*
+  -------------------- End Media home page user_input_anaysis section Section   --------------------
+*/
+
+/* ********************************
+
+********** End Media Query Responsive Design 
+
+******************************************/

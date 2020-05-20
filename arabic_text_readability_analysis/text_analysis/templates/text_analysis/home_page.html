@@ -1,0 +1,129 @@
+{% extends "text_analysis/base.html" %}
+
+{% load static %}
+{% block content %}
+
+<div class="home_page">
+	<div class="row text_generator center">
+		<div class="content col-sm-12">
+			<h1 class="heading">
+				 <span>T</span>
+				  <span>E</span>
+				  <span>X</span>
+				  <span>T</span>
+				  <span>R</span>
+				  <span>E</span>
+				  <span>A</span>
+				  <span>D</span>
+				  <span>A</span>
+				  <span>B</span>
+				  <span>I</span>
+				   <span>L</span>
+				  <span>I</span>
+				   <span>T</span>
+				  <span>Y</span>
+				  <!-- <span>S</span> -->
+			</h1>
+			<p class="text_content">
+				
+
+			</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6 user_input_form">
+			<form method='POST'>
+				{% csrf_token %}
+			   <div class="form-group">
+
+			    <textarea rows="12" cols="50" class="form-control" name="user_text" ></textarea>
+			    <p class="error_input">
+			    	
+			    </p>
+			  </div>
+			  <div class="submit_btns">
+			  	<button type="submit" class="btn btn-primary submit_text">Analyze</button>
+			  	<button type="submit" class="btn btn-primary generate_text">Generate Text</button>
+			  </div>
+			</form>
+			<div class="user_input_result">
+
+			</div>
+		</div>
+
+	<div class="col-md-6 user_input_anaysis">
+		<div class="tab_list_content">
+		  <ul class="nav nav-tabs">
+		    <li class="nav-item">
+		      <a class="nav-link active" data-toggle="tab" href="#home">Overall Statics</a>
+		    </li>
+		    <li class="nav-item">
+		      <a class="nav-link" data-toggle="tab" href="#menu1">Text Composition</a>
+		    </li>
+		    <li class="nav-item">
+		      <a class="nav-link" data-toggle="tab" href="#menu2">Readability GradeLevels</a>
+		    </li>
+		  </ul>
+
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+		    <div id="home" class="container tab-pane statics_calculations active"><br>
+		    	<p class="character_count">Character Count </p>
+		      	<p class="syllable_count">Syllable Count </p>
+		      	<p class="word_count">Word Count </p>
+		      	<p class="unique_word_count">Unique Word Count </p>		      	
+		      	<p class="sentence_count">Sentence Count </p>
+		      	<p class="paragraph_count">Paragraph Count </p>
+		    </div>
+		    <div id="menu1" class="container tab-pane fade text_composition"><br>
+		      	<p class="Adjectives">Adjectives  </p>
+		      	<p class="Adverbs">Adverbs  </p>
+		      	<p class="Conjuctions">Conjunctions  </p>
+		      	<p class="Determiners">Determiners  </p>
+		      	<p class="Interjections">Interjections  </p>
+		      	<p class="Nouns">Nouns  </p>
+		      	<p class="Proper_Nouns">Proper Nouns  </p>
+		      	<p class="Prepositions">Prepositions  </p>
+		      	<p class="Pronouns">Pronouns </p>
+		      	<p class="Verbs">Verbs  </p>
+		    </div>
+		    
+		    <div id="menu2" class="container tab-pane fade readability_gradeLevels"><br>
+		      	<p class="flesch_kincaid_grade_level">
+		      		<i class="fas fa-smile-wink"></i> 
+		      		Flesch Kincaid Grade Level 
+		      	</p>
+		      	<p class="gunning_fog_index">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Gunning Fog Index 
+		       </p>
+
+		      	<p class="coleman_liau_index">
+		      	<i class="far fa-frown"></i>
+		      	Coleman Liau Index 
+		      	</p>
+		      	<p class="smog">
+		      		<i class="far fa-frown"></i>
+			      	SMOG 
+		      	</p>
+		      	<p class="automated_readability_index">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Automated Readability Index 
+		      	</p>
+		      	<p class="flesch_reading_ease">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Flesch Reading Ease 
+		      	</p>
+		      	<p class="powers_sumner_kearl_grade">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Powers Sumner Kearl Grade 
+		      	</p>
+		    </div>
+		    </div>
+		  </div>
+		</div>
+		</div>
+	</div>
+</div>
+	
+{% endblock content %}  
