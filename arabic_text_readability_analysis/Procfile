@@ -1,2 +1,0 @@
-web: gunicorn arabic_text_readability_analysis.wsgi --log-file -
-

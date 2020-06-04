@@ -19,32 +19,40 @@
   <body>
       <!-- start Our NavBar  Style -->
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-  <a class="navbar-brand" href="{% url 'home_page' %}">
-    <img src="{% static "images/logo.png" %}" title="logo" draggable="false">
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      
-
-    </ul>
- 
-  </div>
-</div>
-</nav>
-      
+     
+      <header class="nav-bar">
+       <div class="nav">
+          <div id="nav-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+       </div>
+        <div class="nav_list">
+            <div class="right">
+            
+          </div>
+            <div class="left">
+              
+            </div>
+            <div class="nav_content">
+              <ul class="ul-nav-items">
+              
+              <li class="RubikMonoOne-font"><a class="button_hover_style" href="{% url 'home_page' %}">HOME</a></li>
+              <li><a class="RubikMonoOne-font" href="{% url 'about_page' %}">ABOUT US</a></li>
+              <li><a class="button_hover_style" href="{% url 'contact_page' %}">CONTACT US</a></li>
+            </ul>
+            </div>
+        </div>
+      </header>
+     
       <!-- End Our NavBar  Style -->
 
   <!-- start and end of any page content then with any base there is upper navbar  and bottom footer -->
-  <div class="" style="position: relative; top: 50px">
+  <div class="" style="position: relative; top: 30px">
     {% block content %}
       load pages here
     {% endblock content %}
@@ -55,6 +63,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
     <script src=" {% static "js/owl.carousel.min.js" %} "></script>
     <script src=" {% static "js/all.js" %}"></script>
+ <!--    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE1Yy2UrIJcUjeST946K0Q1bmxUhZCvKE&callback=initMap">
+    </script> -->
+
     <script src=" {% static "js/script.js" %}"></script>
 
 

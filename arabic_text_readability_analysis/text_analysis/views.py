@@ -6,6 +6,7 @@ import os
 import pandas as pd
 import random
 import numpy as np
+from .models import Contact_us
 import secrets
 
 # NLTK and text analysis files
@@ -43,17 +44,53 @@ def text_static_readability_composition(data, text):
 		'automated_readability_index'	: ARI(text),     # ReadabilityGradeLevels file
 		'flesch_reading_ease' 			: FORCAST(text), # ReadabilityGradeLevels file
 		'powers_sumner_kearl_grade' 	: PSKG(text),    # ReadabilityGradeLevels file
+		'FORCAST_grade_level' 			: FORCAST(text),    # ReadabilityGradeLevels file
+		'Rix_readability' 				: RIX(text),    # ReadabilityGradeLevels file
+		'spache_score' 					: SPACHE(text),    # ReadabilityGradeLevels file
+		'new_dale_chall_score' 			: NDC(text),    # ReadabilityGradeLevels file
+		'Lix_readability' 				: LIX(text),    # ReadabilityGradeLevels file
+		'lensear_write' 				: LensearWrite(text),    # ReadabilityGradeLevels file
+	}
+
+	# Readability Issues
+	readability_issues = {
+		's_g_30s' 						: s_g_30s(text),    # ReadabilityGradeLevels file
+		's_g_20s' 						: s_g_20s(text),    # ReadabilityGradeLevels file
+		'w_g_4s' 						: w_g_4s(text),    # ReadabilityGradeLevels file
+		'w_g_12l' 						: w_g_12l(text),    # ReadabilityGradeLevels file
+
+		's_g_30s2' 						: (int((s_g_30s(text)/sentenceCount(text)*100))),    # ReadabilityGradeLevels file
+		's_g_20s2' 						: (int((s_g_20s(text)/sentenceCount(text)*100))),    # ReadabilityGradeLevels file
+		'w_g_4s2' 						: (int((w_g_4s(text)/wordCount(text)*100))),    # ReadabilityGradeLevels file
+		'w_g_12l2' 						: (int((w_g_12l(text)/wordCount(text)*100))),    # ReadabilityGradeLevels file
+	}
+
+	# Text Density Issues & Language Issues
+	text_density_issues = {
+		# 'spelling_issues'				: spellingIssues(text), # ReadabilityGradeLevels file
+		# 'grammar_issues'				: grammarIssues(text), # ReadabilityGradeLevels file
+		'passive_voice_count'			: passiveCount(text), # ReadabilityGradeLevels file
+		'characters_per_word' 			: CPW(text),    # ReadabilityGradeLevels file
+		'syllables_per_word' 			: SPW(text),    # ReadabilityGradeLevels file
+		'words_per_sentence' 			: WPS(text),    # ReadabilityGradeLevels file
+		'words_per_paragraph' 			: WPP(text),    # ReadabilityGradeLevels file
+		'sentences_per_paragraph' 		: SPP(text),    # ReadabilityGradeLevels file
 	}
 
 	# statics_calculations dictionary created above
 	data['statics_calculations'] = statics_calculations
+
+	# readability_issues dictionary created above
+	data['readability_issues'] = readability_issues
+
+	# text_density_issues & Language Issues dictionary created above
+	data['text_density_issues'] = text_density_issues
 
 	# readability_gradeLevels dictionary created above
 	data['readability_gradeLevels'] = readability_gradeLevels
 
 	# Text Composition 
 	data['text_composition'] 		= get_text_composition(text) # text_composition file
-
 	return data
 
 
@@ -99,3 +136,28 @@ def home_page(request):
 	
 
 
+
+def about_page(request):
+
+	return render(request, 'text_analysis/about.html')
+	
+
+
+def contact_page(request):
+	'''
+	Argument:
+		request: page request
+	return:
+		either the page itself if get request
+		or if post make some analysis and send user form to database json result to js and js add to page
+	'''
+	if request.method == "POST":
+		data = json.loads(request.body)
+		Contact_us.objects.create(
+		    mail=data['mail'],
+		    first_name=data['first_name'],
+		    phonenumber=data['phonenumber'],
+		    message=data['message']
+		)
+		return JsonResponse(data)
+	return render(request, 'text_analysis/contact.html')

@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="home_page">
-	<div class="row text_generator center">
+	<!-- div class="row text_generator center">
 		<div class="content col-sm-12">
 			<h1 class="heading">
 				 <span>T</span>
@@ -22,14 +22,13 @@
 				  <span>I</span>
 				   <span>T</span>
 				  <span>Y</span>
-				  <!-- <span>S</span> -->
 			</h1>
 			<p class="text_content">
 				
 
 			</p>
 		</div>
-	</div>
+	</div> -->
 	<div class="row">
 		<div class="col-md-6 user_input_form">
 			<form method='POST'>
@@ -43,7 +42,7 @@
 			  </div>
 			  <div class="submit_btns">
 			  	<button type="submit" class="btn btn-primary submit_text">Analyze</button>
-			  	<button type="submit" class="btn btn-primary generate_text">Generate Text</button>
+			  	<button type="submit" class="btn btn-primary generate_text">Random Sample</button>
 			  </div>
 			</form>
 			<div class="user_input_result">
@@ -61,7 +60,10 @@
 		      <a class="nav-link" data-toggle="tab" href="#menu1">Text Composition</a>
 		    </li>
 		    <li class="nav-item">
-		      <a class="nav-link" data-toggle="tab" href="#menu2">Readability GradeLevels</a>
+		      <a class="nav-link" data-toggle="tab" href="#menu2">GRADE</a>
+		    </li>
+		      <li class="nav-item">
+		      <a class="nav-link" data-toggle="tab" href="#menu3">Issues</a>
 		    </li>
 		  </ul>
 
@@ -89,6 +91,8 @@
 		    </div>
 		    
 		    <div id="menu2" class="container tab-pane fade readability_gradeLevels"><br>
+		    	<h3 style="color: #fff">Readability Grade Levels</h3>
+		    	<hr>
 		      	<p class="flesch_kincaid_grade_level">
 		      		<i class="fas fa-smile-wink"></i> 
 		      		Flesch Kincaid Grade Level 
@@ -104,21 +108,112 @@
 		      	</p>
 		      	<p class="smog">
 		      		<i class="far fa-frown"></i>
-			      	SMOG 
+			      	SMOG  Index
 		      	</p>
 		      	<p class="automated_readability_index">
 		      		<i class="fas fa-smile-wink"></i>
 		      		Automated Readability Index 
 		      	</p>
+		      	<p class="FORCAST_grade_level">
+		      		<i class="fas fa-smile-wink"></i>
+		      		FORCAST Grade Level
+		      	</p>
+		      	<p class="powers_sumner_kearl_grade">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Powers Sumner Kearl Grade
+		      	</p>
+		      	<p class="Rix_readability">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Rix Readability
+		      	</p>
+		      	<h3 style="color: #fff">Readability Scores</h3>
+		      	<hr>
 		      	<p class="flesch_reading_ease">
 		      		<i class="fas fa-smile-wink"></i>
 		      		Flesch Reading Ease 
 		      	</p>
-		      	<p class="powers_sumner_kearl_grade">
+		      	<p class="spache_score">
+		      		<i style="visibility: hidden;" class="fas fa-smile-wink"></i>
+		      		Spache Score
+		      	</p>
+		      	<p class="new_dale_chall_score">
+		      		<i style="visibility: hidden;" class="fas fa-smile-wink"></i>
+		      		New Dale-Chall Score
+		      	</p>
+		      	<p class="Lix_readability">
 		      		<i class="fas fa-smile-wink"></i>
-		      		Powers Sumner Kearl Grade 
+		      		Lix Readability
+		      	</p>
+		      	<p class="lensear_write">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Lensear Write
 		      	</p>
 		    </div>
+
+		     <div id="menu3" class="container tab-pane fade readability_issues"><br>
+		     	<!-- h3 style="color: #fff">Language Issues</h3>
+		    	<hr>
+		    	<p class="spelling_issues">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Spelling Issues 
+		      	</p>
+ -->
+		      <!-- 	<p class="grammar_issues">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Grammar Issues  
+		      	</p> -->
+
+		      	<h3 style="color: #fff">Readability Issues</h3>
+		    	<hr>
+	    		<p class="s_g_30s">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Sentences > 30 Syllables  
+		      	</p>
+	      		<p class="s_g_20s">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Sentences > 20 Syllables 
+		      	</p>
+	      		<p class="w_g_4s">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Words > 4 Syllables  
+		      	</p>
+	      		<p class="w_g_12l">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Words > 12 Letters  
+		      	</p>
+		      	<h3 style="color: #fff">Writing Style Issues</h3>
+		    	<hr>
+		    	<p class="passive_voice_count">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Passive Voice Count 
+		      	</p>
+		      	
+		      	<div class="text_density_issues">
+		      	<h3 style="color: #fff">Text Density Issues</h3>
+		    	<hr>
+	      		<p class="characters_per_word">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Characters per Word
+		      	</p>
+		      	<p class="syllables_per_word">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Syllables per Word
+		      	</p>
+		      	<p class="words_per_sentence">
+		      		<i class="fas fa-smile-wink"></i>
+	      			Words per Sentence
+		      	</p>
+		      	<p class="words_per_paragraph">
+		      		<i class="fas fa-smile-wink"></i>
+		      		Words per Paragraph
+		      	</p>
+		      		<p class="sentences_per_paragraph">
+		      		<i class="fas fa-smile-wink"></i>
+	      			Sentences per Paragraph
+		      	</p>
+		      	</div>
+		    </div>
+
 		    </div>
 		  </div>
 		</div>

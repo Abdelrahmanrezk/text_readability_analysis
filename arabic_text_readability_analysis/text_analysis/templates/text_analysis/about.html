@@ -1,0 +1,34 @@
+{% extends "text_analysis/base.html" %}
+
+{% load static %}
+{% block content %}
+
+<div class="about_page">
+	<div class="container">
+		<div class="">
+	<div class="row">
+		<div class="col-6">
+			<div class="about_content">
+				
+					
+					<h2>About QCRI</h2>
+					<p>
+
+					Qatar Computing Research Institute (QCRI) is a national research institute, established in 2010 by Qatar Foundation (QF) for Education, Science and Community Development, a private, non-profit organization that is supporting Qatar’s transformation from a carbon economy to a knowledge economy. QCRI operates under the umbrella of Hamad bin Khalifa University (HBKU).
+					</p>
+					<a class="" href="{% url 'contact_page' %}">CONTACT US</a>
+				</div>
+			</div>
+			<div class="col-6">
+
+				<div class="about_image">
+									
+				<img src="{% static "images/qcri.jpeg" %}" class="img-thumbnail" draggable="false">
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+	
+{% endblock content %}  

@@ -1,22 +1,51 @@
+import language_tool_python
+import nltk
+from nltk.corpus import words
+from nltk.tokenize import sent_tokenize,word_tokenize
+from nltk.corpus import cmudict
+# from spellchecker import SpellChecker
+# nltk.download('words')
+# nltk.download('cmudict')
+# nltk.download('punkt')
+# nltk.download('averaged_perceptron_tagger')
 import math
 import re
 import string
 import syllables
-from nltk.tokenize import sent_tokenize,word_tokenize
-from nltk.tokenize import sent_tokenize,word_tokenize
 from pyphen import Pyphen
+d = cmudict.dict()
 dic = Pyphen(lang="en")
+
+
+# tool = language_tool_python.LanguageTool('en-US')
 
 
 def removePunctuation(text):
     result = ""
 
     for char in text:
-        if char in (".",",","!","?","؟","\n","\r","\t","،","\",""/","\"","#","$","%","&","'","(",")","*","+","-",":",";","<",">","=","@","[","]","^","_","`","{","}","|","~"):
+        if char in (".",",","!","?","؟","،","\",""/","\"","#","$","%","&","'","(",")","*","+",":",";","<",">","=","[","]","^","_","`","{","}","|","~"):
             continue
+        if char in ("-","\n","\r","\t"):
+            char=" "
         result+=char
     return result
 
+def removeSpace(text):
+    result=""
+    for char in text:
+        if char in ("-","\n","\r","\t"):
+            char=" "
+        result+=char
+    return result
+
+def removeDigits(text):
+    result=""
+    for i in text:
+        if(i.isdigit()):
+            continue
+        result+=i
+    return result
 
 def characterCount(text):
     count=0
@@ -41,12 +70,14 @@ def wordCount(text):
     return count
 
 
+
 def count_complex_word(text):
     complex_words = 0
+    text=removePunctuation(text)
     for i in text.split(' '):        
         syllable_word = dic.inserted(i)
         syllable_dash = re.findall('-', syllable_word)
-        if len(syllable_dash) >= 2:
+        if (len(syllable_dash) >= 2):
             complex_words +=1
     return max(1, complex_words)
 
@@ -56,13 +87,13 @@ def nsyl(word):
         li=[]
         for x in d[word.lower()][0]:
             for y in x:
-                #print(y)
                 if(y[-1].isdigit()):
                     li.append(y)
         return(len(li))
     except:
-    	#if word not found in cmudict
         return(syllables(word))
+
+
 
 
 def syllables(word):
@@ -89,13 +120,15 @@ def syllableCount(text):
     num=0
     text=removePunctuation(text)
     words=word_tokenize(text)
-    #print(words)
     for i in words:
         count=count+nsyl(i)
     return(count)
 
 
+
 def singleSyllableWord(text):
+    text=removePunctuation(text)
+    text=removeDigits(text)
     words=word_tokenize(text)
     result=0
     for i in words:
@@ -121,6 +154,7 @@ def uniqueWordCount(text):
         count+=1
     return count
 
+
 def sentenceCount(text):
     sentence=sent_tokenize(text)
     count=len(sentence)
@@ -132,12 +166,14 @@ def paragraphCount(text):
     count=  [line.strip() for line in text.split('\n') if len(line.strip()) > 0]
     return len(count)
 
+
 def ReadingTime(text):
     word = wordCount(text)
     div_wordCount=word/200
     second,minute=math.modf(div_wordCount)
     second=round((second*0.60),2)
     return (minute+second)
+
 
 
 def SpeakingTime(text):
@@ -148,6 +184,8 @@ def SpeakingTime(text):
     second=round(second*0.60,2)
     return (minute+second)
 
+
+
 def FKRA(txt):
     word = wordCount(txt)
     sentence =sentenceCount(txt)
@@ -157,13 +195,16 @@ def FKRA(txt):
     FKRA = (0.39 * ASL) + (11.8 * ASW) - 15.59
     return round(FKRA,2)
 
+
 def GFI(txt):
-    txt = txt.lower()
     word = wordCount(txt)
     sentence = sentenceCount(txt)
     c_word = count_complex_word(txt)
+
     GFI = 0.4 * ((word / sentence) + 100 * (c_word / word))
     return round(GFI,2)
+
+
 
 
 def CLI(txt):
@@ -176,12 +217,15 @@ def CLI(txt):
     CLI = (0.0588 * L) - (0.296 * S) - 15.8
     return round(CLI,2)
 
+
 def SMOGI(txt):
     txt = txt.lower()
     sentence = sentenceCount(txt)
     plosyllable = count_complex_word(txt)
     SMOGI = 1.0430 * (math.sqrt(plosyllable * (30 / sentence))) + 3.1291
     return round(SMOGI,2)
+
+
 
 def ARI(txt):
     txt = txt.lower()
@@ -193,21 +237,240 @@ def ARI(txt):
 
 
 def FORCAST(txt):
-    syllable =syllableCount(txt)
     syll=singleSyllableWord(txt)
     c_word = count_complex_word(txt)
-    GL = 25 - (syll/ 10)
+    div=round( (wordCount(txt)*10)/150,2)
+    GL = 20 - (syll/ div)
     return round(GL,2)
 
+
+
 def PSKG(txt):
-    #txt = txt.lower()
     word = wordCount(txt)
     sentence = sentenceCount(txt)
     syllable = syllableCount(txt)
     ASL = word / sentence
-    NS = ((syllable /word) * 0.0455) * 100
+    NS = ((syllable/word) * 0.0455*100) 
     GL = (0.0778 * ASL) + NS - 2.2029
     return round(GL,2)
 
 
+def RIX(txt):
+    count = 0
+    sentence = sentenceCount(txt)
+    for x in txt.split(" "):
+        if characterCount(x) > 4:
+            count+=1
+    return round((count / sentence ),2)
 
+def FRE(txt):
+    sentence = sentenceCount(txt)
+    word = wordCount(txt)
+    syllable = syllableCount(txt)
+    ASL = word / sentence
+    ASW = syllable / word
+    RE = 206.835 - (1.015 * ASL) - (84.6 * ASW)
+    return round(RE,1)
+
+def NDC(txt):
+    c_word = count_complex_word(txt)
+    word = wordCount(txt)
+    sentence = sentenceCount(txt)
+    PDW = round(c_word / word,2)*100
+    ASL = word / sentence
+    if PDW > 5:
+        RS = ((0.1579 * PDW) + (0.0496 * ASL)) + 3.6365
+    else:
+        RS = (0.1579 * PDW) + (0.0496 * ASL)
+    return round(RS,1)
+
+def SPACHE(txt):
+    c_word = count_complex_word(txt)
+    word = wordCount(txt)
+    sentence = sentenceCount(txt)
+    PDW = round(c_word / word,2)*100
+    ASL = word / sentence
+    SP = ((0.141 *ASL) + (0.086 * PDW)+0.839)
+    return round(SP,1)
+
+#Sentences > 30 Syllables
+def s_g_30s(txt):
+    count =0
+    sentence=sent_tokenize(txt)
+    for x in sentence:
+        if syllableCount(x) > 30:
+            count+=1
+    return count
+
+#Sentences > 20 Syllables
+def s_g_20s(txt):
+    count =0
+    sentence=sent_tokenize(txt)
+    for x in sentence:
+        if syllableCount(x) > 20:
+            count+=1
+    return count  
+
+#Words > 4 Syllables
+def w_g_4s(txt):
+    count =0
+    words=word_tokenize(txt)
+    for x in words:
+        if syllableCount(x) >= 4:
+            count+=1
+    return count 
+
+def w_g_12l(txt):
+    count =0
+    words=word_tokenize(txt)
+    for x in words:
+        if len(x) > 12:
+            count+=1
+    return count
+
+# Characters Per Word
+def CPW(txt):
+  WordCount=wordCount(txt)
+  CharacterCount=characterCount(txt)
+  CharactersPerWord=round(CharacterCount/WordCount,1)
+  return CharactersPerWord
+
+#Syllables Per Word
+def SPW(txt):
+  WordCount=wordCount(txt)
+  SyllableCount= syllableCount(txt)
+  SyllablesPerWord=round(SyllableCount/WordCount,1)
+  return SyllablesPerWord
+
+#Words Per Sentence
+def WPS(txt):
+  WordCount=wordCount(txt)
+  SentenceCount=sentenceCount(txt)
+  WordsPerSentence=round(WordCount/SentenceCount,1)
+  return WordsPerSentence
+
+#Words Per Paragraph
+def WPP(txt):
+  WordCount=wordCount(txt)
+  ParagraphCount=paragraphCount(txt)
+  WordsPerParagraph=round(WordCount/ParagraphCount,1)
+  return WordsPerParagraph
+
+#Sentences Per Paragraph
+def SPP(txt):
+  SentenceCount=sentenceCount(txt)
+  ParagraphCount=paragraphCount(txt)
+  SentencePerParagraph=round(SentenceCount/ParagraphCount,1)
+  return SentencePerParagraph
+
+def w_g_6l(txt):
+    count =0
+    words=word_tokenize(txt)
+    for x in words:
+        #print(len(x))
+        if len(x) > 6:
+            count+=1
+    return count 
+
+def LIX(txt):
+  WordCount=wordCount(txt)
+  SentenceCount=sentenceCount(txt)
+  LongWords=w_g_6l(txt)
+  percentageOfLongWords=(LongWords/WordCount)*100
+  avgLengthOfSentence=WordCount/SentenceCount
+  result=round(percentageOfLongWords+avgLengthOfSentence,0)
+  return result
+
+def nonWordCount(text):
+    regex="[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$"    #checks for email address
+    emails = re.findall("([a-zA-Z0-9]+[\._]?@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)", text)
+    print("Non word: ",emails)
+    return(len(emails))
+
+
+def LensearWrite(text):
+  text=removePunctuation(text)
+  words=word_tokenize(text)
+  SentenceCount=sentenceCount(text)
+  wordcount=wordCount(text)
+  ratio=100/wordcount
+  hardword=ratio*3
+  easyword=ratio*1
+  Score=0
+  for word in words:
+    if nsyl(word) <= 2:
+      Score+=easyword
+    if nsyl(word) >=3:
+      Score+=hardword
+  preResult=(Score/SentenceCount)
+  if preResult > 20:
+    result=round((preResult/2),1)
+  else:
+    result=round((preResult-2)/2,1)
+    
+  return result
+
+def take_data_to_shower(text):
+    text=removeSpace(text)
+    alphanumeric = ""
+    for char in text:
+        if char ==" ":
+            alphanumeric += " "
+            continue
+        if char.isalnum():
+            alphanumeric += char 
+    return alphanumeric
+
+def spellingIssues(t):
+    text = take_data_to_shower(t)
+    wrong =[]
+    for w in (text.lower()).split():
+        flag = str(w)in words.words()
+        if flag == False and w not in wrong:
+            wrong.append(w)
+    return len(wrong)
+
+def grammarIssues(t):
+  matches = tool.check(t)
+  return (len(matches))
+
+def isPassive(sentence):
+    beforms = ['am', 'is', 'are', 'been', 'was', 'were', 'be', 'being']              
+    aux = ['do', 'did', 'does', 'have', 'has', 'had']                                 
+    words = nltk.word_tokenize(sentence)
+    tokens = nltk.pos_tag(words)
+    tags = [i[1] for i in tokens]
+    if tags.count('VBN') == 0:                                                           
+        return False
+    elif tags.count('VBN') == 1 and 'been' in words:                                   
+        return False
+    else:
+        pos = [i for i in range(len(tags)) if tags[i] == 'VBN' and words[i] != 'been']  
+        end=pos[0]
+        chunk = tags[:end]
+        start = 0
+        for i in range(len(chunk), 0, -1):
+            last = chunk.pop()
+            if last == 'NN' or last == 'PRP':
+                start = i                                                             
+                break
+        sentchunk = words[start:end]
+        tagschunk = tags[start:end]
+        verbspos = [i for i in range(len(tagschunk)) if tagschunk[i].startswith('V')] 
+        if verbspos != []:                                                           
+            for i in verbspos:
+                if sentchunk[i].lower() not in beforms and sentchunk[i].lower() not in aux:  
+                    break
+            else:
+                return True
+    return False
+
+
+def passiveCount(text):
+    sentences= nltk.sent_tokenize(text)
+    count=0
+    for sent in sentences:
+        val=isPassive(sent)
+        if(val==True):
+            count+=1
+    return count
