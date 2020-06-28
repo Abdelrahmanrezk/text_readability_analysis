@@ -1,4 +1,4 @@
-
+/*
     before start to search about any page or section make $ like ### $start home_page
 
     find ***************************** for media query code like ****** Start Media Query
@@ -49,7 +49,8 @@ section, summary, time, mark, audio, video{
     outline: none !important;
 }
 
-body{ background: #8C8C8C; overflow-x: hidden; }
+.fa-frown, .fa-smile-wink {margin-right: 10px}
+body{ background: #cecece; overflow-x: hidden; }
 
 body.scrolling_behavior{ overflow: hidden; }
 
@@ -63,9 +64,13 @@ li{ list-style-type: none; }
 
 li a{ color: inherit; }
 
-.button_hover_style{ transition: .5s }
+.dark_gray{
+  /*background: #afafaf;*/
+color: #696969 !important;
+}
 
-.button_hover_style:hover{ color:#fff; }
+.fa-frown{color: #800909}
+.fa-smile-wink{color: #0d864c}
 
 
 @font-face {
@@ -272,13 +277,13 @@ a:focus {
   #################### $Start collaborative section ####################
 */
 
-.home_page .user_input_form .submit_btns button:hover,
+/*.home_page .user_input_form .submit_btns button:hover,
 .contact_us_page .contact_us_form .submit_contact:hover{
   transform: scale(1.2,1);
   letter-spacing: 2px;
   background-image:  linear-gradient(to right, white , black);
   color: #000
-}
+}*/
 
 .home_page .user_input_form .submit_btns,
 .contact_us_page .contact_us_form .submit_contact{
@@ -288,16 +293,21 @@ a:focus {
   text-align: center;
 }
 
-.home_page .statics_calculations p span,
-.home_page .text_composition p span,
-.home_page .readability_gradeLevels p span,
-.home_page .readability_issues p span{
+
+.home_page .statics_calculations div span,
+.home_page .text_composition div span,
+.home_page .readability_gradeLevels div span,
+.home_page .readability_issues div span{
   color: #222;
   font-size: 16px;
   position: absolute;
-  right: 2%;
+  right: 45%;
   font-weight: bold;
 
+}
+.home_page .statics_calculations div span,
+.home_page .text_composition div span{
+  right: 55%;
 }
 .home_page .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active{
@@ -309,10 +319,10 @@ a:focus {
   border-top: 2px solid #fff
 }
 
-.home_page .statics_calculations p ,
-.home_page .text_composition p ,
-.home_page .readability_gradeLevels p,
-.home_page .readability_issues p{
+.home_page .statics_calculations div ,
+.home_page .text_composition div ,
+.home_page .readability_gradeLevels div,
+.home_page .readability_issues div{
   color: #222;
   padding: 5px;
   font-size: 16px;
@@ -321,8 +331,11 @@ a:focus {
   /*box-shadow: 0 0 5px #9f9f95;*/
   text-align: left;
   position: relative;
+  transition: 1s
 }
-
+.non_percentage span{
+  margin-right: -75px
+}
 .about_page .about_content, 
 .about_page .about_image,
 .contact_us_page .contact_us_form,
@@ -518,7 +531,7 @@ a:focus {
 
 .home_page .nav-tabs{ border-bottom: none }
 
-.navbar .navbar-brand img{ height: 2.5em }
+.nav-bar .navbar-brand img{ height: 2.5em }
 
 .home_page .user_input_form .user_input_result .highlighted_word{ color: red; }
 
@@ -529,12 +542,16 @@ a:focus {
 .home_page .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link:hover{ border: 1px solid #fff; }
 
 .home_page .user_input_anaysis .tab_list_content .nav-tabs .nav-link{
-  color: #fff;
+  color: #0084c8;
   font-size: 18px;
   padding: 15px;
 }
 
-
+.nav-bar .navbar-brand{
+  position: absolute;
+  right: 3%;
+  top: 10px;
+}
 .home_page .user_input_anaysis .tab_list_content{
   position: relative;
   overflow: hidden;
@@ -575,11 +592,11 @@ a:focus {
 .about_content p{
   line-height: 2;
   font-size: 20px;
-  color: #fff;
+  color: #333;
 }
 
 .about_content h2{
-  color: #fff;
+  color: #0084c8;
   font-size: 35px;
   margin-bottom: 35px;
   font-family: "Cairo-Black";
@@ -696,10 +713,10 @@ a:focus {
   font-size: 10px;
   padding: 5px;
 }
-.home_page .statics_calculations p ,
-.home_page .text_composition p ,
-.home_page .readability_gradeLevels p,
-.home_page .readability_issues p {
+.home_page .statics_calculations div ,
+.home_page .text_composition div ,
+.home_page .readability_gradeLevels div,
+.home_page .readability_issues div {
 
   padding: 5px;
   font-size: 12px;
@@ -727,22 +744,14 @@ a:focus {
 .contact_us_map h3{
   margin-bottom: 50px;
   font-size: 30px;
-  color: #fff;
+  color: #0084c8;
   letter-spacing: 5px;
   font-family: "Cairo-Black";
 }
 
 
-
-
-.non_percentage{
-  margin-right: 60px
-}
-
 .nav-bar{
-  margin-bottom: 70px;
   background: #efefef;
-  /*position: relative;*/
   height: 80px;
 }
 
@@ -752,4 +761,188 @@ a:focus {
   margin: 0 10px 5px;
   /*border-bottom: 1px solid #ccc;*/
   border-radius: 0;
+}
+/*.result_meaning{
+  display: none;
+  transition: .5s
+}*/
+
+.result_meaning.arrow_box{
+  position: relative;
+  background: #88b7d5;
+  padding: 10px;
+text-align: center;
+margin-top: 10px
+  /*border: 4px solid #c2e1f5;*/
+}
+.result_meaning.arrow_box:after, .result_meaning.arrow_box:before {
+  bottom: 90%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.result_meaning.arrow_box:after {
+  border-color: rgba(136, 183, 213, 0);
+  border-bottom-color: #88b7d5;
+  border-width: 30px;
+  margin-left: -30px;
+}
+.result_meaning.arrow_box:before {
+  border-color: rgba(194, 225, 245, 0);
+  /*border-bottom-color: #c2e1f5;*/
+  border-width: 15px;
+  margin-left: -36px;
+}
+
+.m_meaning{
+  margin-right: -250px;
+  font-size: 10px !important;
+  /*position: absolute;*/
+left: 60%;
+text-align: left;
+/*width: 100%;*/
+display: inline-block;
+}
+p{ 
+  margin-bottom: 0rem
+}
+
+/*.character_count:hover{
+  color: red;
+  background: green
+}
+*/
+.tippy-content{
+  background-color: white;
+  box-shadow: 0 0 3px #333;
+  color: #333;
+  padding: 10px;
+  /*text-align: le;*/
+  font-size: 16px
+}
+
+.select {
+  display:flex;
+  flex-direction: column;
+  position:relative;
+  width:250px;
+  height:40px;
+}
+
+.option {
+  padding:0 30px 0 10px;
+  min-height:40px;
+  display:flex;
+  align-items:center;
+  background:#333;
+  border-top:#222 solid 1px;
+  position:absolute;
+  top:0;
+  width: 100%;
+  pointer-events:none;
+  order:2;
+  z-index:1;
+  transition:background .4s ease-in-out;
+  box-sizing:border-box;
+  overflow:hidden;
+  white-space:nowrap;
+  
+}
+
+.option:hover {
+  background:#666;
+}
+
+.select:focus .option {
+  position:relative;
+  pointer-events:all;
+}
+label.option{
+  margin:0;
+  color: white
+}
+input {
+  opacity:0;
+  position:absolute;
+  left:-99999px;
+}
+
+input:checked + label {
+  order: 1;
+  z-index:2;
+  background:#666;
+  border-top:none;
+  position:relative;
+  /*color: white*/
+}
+
+input:checked + label:after {
+  content:'';
+  width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid white;
+  position:absolute;
+  right:10px;
+  top:calc(50% - 2.5px);
+  pointer-events:none;
+  z-index:3;
+}
+
+input:checked + label:before {
+  position:absolute;
+  right:0;
+  height: 40px;
+  width: 50%;
+  content: '';
+  background:#666;
+}
+
+.language_img{
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 50px;
+}
+
+/*.empty_output.active{
+  transition: .5;
+  position: fixed;
+  width: 100%;
+  height: ;
+  background: red;
+  height: 100%;
+  z-index: 9999999;
+
+}*/
+
+.arabic_seg .api_result,
+.arabic_lemma .api_result,
+.arabic_SpCH .api_result,
+.arabic_Diac .api_result,
+.arabic_Diac2 .api_result{
+   text-align: right;
+  word-wrap: break-word;
+  font-size: 20px;
+ 
+}
+/*.language_choice, .faras_api_choise{
+  display: 
+}*/
+
+.readibilty_heading{
+  color: #0084c8
+}
+
+.readability_report{
+  margin-bottom: 15px;
+  margin-top: -35px;
+  color: blue;
+  font-size: 20px;
 }

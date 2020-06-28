@@ -31,6 +31,10 @@
 	</div> -->
 	<div class="row">
 		<div class="col-md-6 user_input_form">
+			<!-- <li class="readability_report"><a  target="_blank" class="RubikMonoOne-font" href="https://drive.google.com/file/d/194hIz6byw8xK_-bQKazL9NqPtu55v-Lj/view?usp=sharing">Readability Report</a></li> -->
+			<li class="readability_report">
+			<a href="https://drive.google.com/file/d/194hIz6byw8xK_-bQKazL9NqPtu55v-Lj/view?usp=sharing"target="_blank" class="read-more-link"> READ ME </a></li>
+
 			<form method='POST'>
 				{% csrf_token %}
 			   <div class="form-group">
@@ -40,9 +44,27 @@
 			    	
 			    </p>
 			  </div>
+			  <div class="form-group">
+			    <label style="color: #0084c8; font-size: 25px;">Language</label>
+			   <div class="select language_choice" tabindex="1">
+				  <input class="selectopt" value="English" name="language_selected" type="radio" id="opt1" checked>
+				  <label for="opt1"  class="option">English
+				  	<img class="language_img" src="{% static "images/uk_logo.png" %}" >
+				  </label>
+				  <input class="selectopt" value="Arabic" name="language_selected" type="radio" id="opt2">
+				  <label for="opt2" class="option">Arabic
+				  	<img class="language_img" src="{% static "images/Saudi_Arabia.png" %}" >
+				  </label>
+				  <input class="selectopt" value="Hindi" name="language_selected" type="radio" id="opt3">
+				  <label for="opt3" class="option">Hindi
+				  	<img class="language_img" src="{% static "images/hindi_logo.png" %}" >
+				  </label>
+				</div>
+			  </div>
 			  <div class="submit_btns">
 			  	<button type="submit" class="btn btn-primary submit_text">Analyze</button>
 			  	<button type="submit" class="btn btn-primary generate_text">Random Sample</button>
+			  	
 			  </div>
 			</form>
 			<div class="user_input_result">
@@ -51,10 +73,15 @@
 		</div>
 
 	<div class="col-md-6 user_input_anaysis">
+		<div class="empty_output">
+			<!-- <div>
+			Soory you chould add some text and click analysis
+			</div> -->
+		</div>
 		<div class="tab_list_content">
 		  <ul class="nav nav-tabs">
 		    <li class="nav-item">
-		      <a class="nav-link active" data-toggle="tab" href="#home">Overall Statics</a>
+		      <a class="nav-link active" data-toggle="tab" href="#home">Overall Statistics</a>
 		    </li>
 		    <li class="nav-item">
 		      <a class="nav-link" data-toggle="tab" href="#menu1">Text Composition</a>
@@ -65,160 +92,507 @@
 		      <li class="nav-item">
 		      <a class="nav-link" data-toggle="tab" href="#menu3">Issues</a>
 		    </li>
+		     <li class="nav-item">
+		      <a class="nav-link" data-toggle="tab" href="#menu4">Farasa NLP</a>
+		    </li>
+		  <!--    <li class="nav-item">
+		      <a class="nav-link" data-toggle="tab" href="#menu5">Lemmatization</a>
+		    </li>
+	       <li class="nav-item">
+		      <a class="nav-link" data-toggle="tab" href="#menu6">Spell Check</a>
+		    </li>
+		     <li class="nav-item">
+		      <a class="nav-link" data-toggle="tab" href="#menu7">Diacritize</a>
+		    </li>
+		     <li class="nav-item">
+		      <a class="nav-link" data-toggle="tab" href="#menu8">Diacritize v2</a>
+		    </li> -->
 		  </ul>
 
 		  <!-- Tab panes -->
 		  <div class="tab-content">
 		    <div id="home" class="container tab-pane statics_calculations active"><br>
-		    	<p class="character_count">Character Count </p>
-		      	<p class="syllable_count">Syllable Count </p>
-		      	<p class="word_count">Word Count </p>
-		      	<p class="unique_word_count">Unique Word Count </p>		      	
-		      	<p class="sentence_count">Sentence Count </p>
-		      	<p class="paragraph_count">Paragraph Count </p>
+		    	<div class="character_count">
+		    		Character Count <span class="r_scor"></span>
+		    		<!-- <p class="result_meaning">
+		    			Letters (just A-Z, not including numbers and punctuation).
+		    		</p> -->
+		    	</div>
+		      	<div class="syllable_count">
+		      		Syllable Count <span class="r_scor"></span>
+	      			<!-- <p class="result_meaning">
+		    			test
+		    		</p> -->
+		      	</div>
+		      	<div class="word_count">
+		      		Word Count <span class="r_scor"></span>
+		      		<!-- <p class="result_meaning">
+		    			test
+		    		</p> -->
+		      	</div>
+		      	<div class="unique_word_count">
+		      		Unique Word Count <span class="r_scor"></span>
+		      		<!-- <p class="result_meaning">
+		    			test
+		    		</p> -->
+		      	</div>		      	
+		      	<div class="sentence_count">
+		      		Sentence Count <span class="r_scor"></span>
+		      		<!-- <p class="result_meaning">
+		    			Sentences are assumed to end with periods, question marks, exclamation marks or line breaks.
+		    		</p> -->
+		      	</div>
+		      	<div class="paragraph_count">
+		      	Paragraph Count <span class="r_scor"></span>
+		      <!-- 	<p class="result_meaning">
+		    			Paragraphs are defined as ending with a line break.
+	    		</p> -->
+		      </div>
+		      <div class="reading_time">
+		      	Reading Time <span class="r_scor"></span>
+		   <!--    	<p class="result_meaning">
+		    			The time it would take for the average person to read this text, at a rate of 225 words per minute.
+	    		</p> -->
+		      </div>
+		      <div class="speaking_time">
+		      	Speaking Time <span class="r_scor"></span>
+		      <!-- 	<p class="add_span_before result_meaning">
+		    			The time it would take for the average person to say this text aloud, at a rate of 125 words per minute.
+	    		</p> -->
+		      </div>
 		    </div>
 		    <div id="menu1" class="container tab-pane fade text_composition"><br>
-		      	<p class="Adjectives">Adjectives  </p>
-		      	<p class="Adverbs">Adverbs  </p>
-		      	<p class="Conjuctions">Conjunctions  </p>
-		      	<p class="Determiners">Determiners  </p>
-		      	<p class="Interjections">Interjections  </p>
-		      	<p class="Nouns">Nouns  </p>
-		      	<p class="Proper_Nouns">Proper Nouns  </p>
-		      	<p class="Prepositions">Prepositions  </p>
-		      	<p class="Pronouns">Pronouns </p>
-		      	<p class="Verbs">Verbs  </p>
+		      	<div class="Adjectives">
+		      	Adjectives <span class="r_scor"></span>
+		     <!--  	<p class="add_span_before result_meaning">
+		    			Paragraphs are defined as ending with a line break.
+	    		</p> -->
+		      	</div>
+		      	<div class="Adverbs">
+		      	Adverbs <span class="r_scor"></span>
+		     <!--  	<p class="add_span_before result_meaning">
+		    			Paragraphs are defined as ending with a line break.
+	    		</p> -->
+		      </div>
+		      	<div class="Conjuctions">
+		      	Conjunctions  <span class="r_scor"></span>
+		      	<!-- <p class="add_span_before result_meaning">
+		    			Paragraphs are defined as ending with a line break.
+	    		</p> -->
+		      </div>
+		      	<div class="Determiners">
+		      	Determiners  <span class="r_scor"></span>
+		     <!--  	<p class="add_span_before result_meaning">
+		    			Paragraphs are defined as ending with a line break.
+	    		</p> -->
+		      </div>
+		      	<div class="Interjections">
+		      	Interjections  <span class="r_scor"></span>
+		      	<!-- <p class="add_span_before result_meaning">
+		    			Paragraphs are defined as ending with a line break.
+	    		</p> -->
+		      </div>
+		      	<div class="Nouns">
+		      		Nouns  <span class="r_scor"></span>
+		      		<!-- <p class="result_meaning">
+		    			Paragraphs are defined as ending with a line break.
+	    			</p> -->
+		      	</div>
+		      	<div class="Proper_Nouns">
+		      		Proper Nouns <span class="r_scor"></span>
+		      	<!-- 	<p class="result_meaning">
+		    			Paragraphs are defined as ending with a line break.
+	    		</p>  --> 
+		      	</div>
+		      	<div class="Prepositions">
+		      		Prepositions <span class="r_scor"></span>
+		      	<!-- 	<p class="result_meaning">
+		    			Paragraphs are defined as ending with a line break.
+	    		</p> -->
+		      	 </div>
+		      	<div class="Pronouns">
+		      		Pronouns <span class="r_scor"></span>
+		      		<!-- <p class="result_meaning">
+		    			Paragraphs are defined as ending with a line break.
+	    		</p> -->
+		      	</div>
+		      	<div class="Verbs">
+		      		Verbs <span class="r_scor"></span>
+		      	<!-- 	<p class="result_meaning">
+		    			Paragraphs are defined as ending with a line break.
+	    		</p> -->
+		      	</div>
 		    </div>
 		    
 		    <div id="menu2" class="container tab-pane fade readability_gradeLevels"><br>
-		    	<h3 style="color: #fff">Readability Grade Levels</h3>
+		    	<h3 class="readibilty_heading">Readability Grade Levels</h3>
 		    	<hr>
-		      	<p class="flesch_kincaid_grade_level">
-		      		<i class="fas fa-smile-wink"></i> 
-		      		Flesch Kincaid Grade Level 
-		      	</p>
-		      	<p class="gunning_fog_index">
-		      		<i class="fas fa-smile-wink"></i>
-		      		Gunning Fog Index 
-		       </p>
+		      	<div class="flesch_kincaid_grade_level">
+		      		 
+		      		<p>
+		      			<i class=""></i> Flesch Kincaid Grade Level <span class="r_scor"></span>
+		      			<span class="m_meaning"></span>
+		      		</p>
+		      		
+		      	<!-- 	<p class="result_meaning">
+		    			Originally created to analyze the readabiliity of technical material. Now used widely and highly regarded for its reliability. Suitable for the grading of a wide range of writing and for all ages. 
+		    			<a href="https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests">Read more</a>
+	    			</p> -->
+		      	</div>
+		      	<div class="gunning_fog_index">
+		      		
+		      		<p><i class=""></i>Gunning Fog Index <span class="r_scor"></span><span class="m_meaning"></span></p>
 
-		      	<p class="coleman_liau_index">
-		      	<i class="far fa-frown"></i>
-		      	Coleman Liau Index 
-		      	</p>
-		      	<p class="smog">
-		      		<i class="far fa-frown"></i>
-			      	SMOG  Index
-		      	</p>
-		      	<p class="automated_readability_index">
-		      		<i class="fas fa-smile-wink"></i>
-		      		Automated Readability Index 
-		      	</p>
-		      	<p class="FORCAST_grade_level">
-		      		<i class="fas fa-smile-wink"></i>
-		      		FORCAST Grade Level
-		      	</p>
-		      	<p class="powers_sumner_kearl_grade">
-		      		<i class="fas fa-smile-wink"></i>
-		      		Powers Sumner Kearl Grade
-		      	</p>
-		      	<p class="Rix_readability">
-		      		<i class="fas fa-smile-wink"></i>
-		      		Rix Readability
-		      	</p>
-		      	<h3 style="color: #fff">Readability Scores</h3>
+		      		
+		      	<!-- 	<p class="result_meaning">
+		    			Suitable for a wide range of material and especially for business writing and publishing. Grading suitable for all ages.
+		    			<a href="https://en.wikipedia.org/wiki/Gunning_fog_index">Read more</a>
+	    			</p> -->
+		       </div>
+
+		      	<div class="coleman_liau_index">
+		      		<p>
+		      	<i class=""> </i>
+		      		Coleman Liau Index <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+	      		<!-- 	<p class="result_meaning">
+		    			A character-calculated formula suitable for a wide range of texts and for all ages, and especially useful within education.
+		    			<a href="https://en.wikipedia.org/wiki/Coleman%E2%80%93Liau_index">Read more</a>
+	    			</p> -->
+		      	</div>
+		      	<div class="smog">
+		      		<p>
+		      		<i class=""></i>
+			      	SMOG  Index <span class="r_scor"></span>
+			      	<span class="m_meaning"></span>
+			      	</p>
+			     <!--  	<p class="result_meaning">
+		    			Applicable to a range of texts and ages but has been proven particularly useful in healthcare literature.
+		    			<a href="https://en.wikipedia.org/wiki/SMOG">Read more</a>
+	    			</p> -->
+		      	</div>
+		      	<div class="automated_readability_index">
+		      		<p>
+		      		<i class=""></i>
+		      		Automated Readability Index  <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+		      	</div>
+		      	<div class="FORCAST_grade_level">
+		      		<p>
+		      		<i class=""></i>
+		      		FORCAST Grade Level <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+		      	<!-- 	<p class="result_meaning">
+		    			A vocabulary-calculated formula, especially useful for technical writing.
+		    			<a href="https://en.wikipedia.org/wiki/Readability">Read more</a>
+	    			</p> -->
+		      	</div>
+		      	<div class="powers_sumner_kearl_grade">
+		      		<p>
+		      		<i class=""></i>
+		      		Powers Sumner Kearl Grade <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+		      		<!-- <p class="result_meaning">
+		    			Calculated with sentence length and syllables as variables, this formula is best used to calculate readability in elementary grade texts.
+		    			<a href="https://readabilityformulas.com/powers-sumner-kear-readability-formula.php">Read more</a>
+	    			</p> -->
+		      	</div>
+		      	<div class="Rix_readability">
+		      		<p>
+		      		<i  class="fas fa-smile-wink"></i>
+		      		Rix Readability <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+		      	<!-- 	<p class="result_meaning">
+		    			Rix is calculated with word length and sentence length as variables. It is an evolution from the Lix formula, and produces a grade level.
+		    			<a href="https://en.wikipedia.org/wiki/Lix_(readability_test)">Read more</a>
+	    			</p> -->
+		      	</div>
+		      	 <!-- <div   class="raygor_readability dark_gray">
+		      	 	<p>
+		      		<i style="visibility: hidden;" class="fas fa-smile-wink"></i>
+		      		Raygor Readability <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+		
+		      	</div>
+		      	 <div  class="fry_readability dark_gray">
+		      	 	<p>
+		      		<i style="visibility: hidden;" class="fas fa-smile-wink"></i>
+		      		Fry Readability <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+		     
+		      	</div> -->
+		      	<h3 class="readibilty_heading">Readability Scores</h3>
 		      	<hr>
-		      	<p class="flesch_reading_ease">
-		      		<i class="fas fa-smile-wink"></i>
-		      		Flesch Reading Ease 
-		      	</p>
-		      	<p class="spache_score">
+		      	<!--  <div class="readable_rating dark_gray">
+		      	 	<p>
+		      		<i class=""></i>
+		      		Readable Rating <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+
+		      	</div> -->
+		      	<div class="flesch_reading_ease">
+		      		<p>
+		      		<i class=""></i>
+		      		Flesch Reading Ease  <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+		      		<!-- <p class="result_meaning">
+		    			This was originally created in education research but is now used for a variety of purposes, including by government bodies and policy writers. 
+		    			<a href="https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests">Read more</a>
+	    			</p> -->
+		      	</div>
+		      	<!--  <div class="CEFR_level dark_gray">
+		      	 	<p>
 		      		<i style="visibility: hidden;" class="fas fa-smile-wink"></i>
-		      		Spache Score
-		      	</p>
-		      	<p class="new_dale_chall_score">
+		      		CEFR Level <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+
+		      	</div>
+		      	 <div  class="IELTS_level dark_gray">
+		      	 	<p>
 		      		<i style="visibility: hidden;" class="fas fa-smile-wink"></i>
-		      		New Dale-Chall Score
-		      	</p>
-		      	<p class="Lix_readability">
+		      		IELTS Level <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+
+		      	</div> -->
+		      	<div class="spache_score">
+		      		<p>
 		      		<i class="fas fa-smile-wink"></i>
-		      		Lix Readability
-		      	</p>
-		      	<p class="lensear_write">
-		      		<i class="fas fa-smile-wink"></i>
-		      		Lensear Write
-		      	</p>
+		      		Spache Score <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+		      		<!-- <p class="result_meaning">
+		    			Spache is a readability test for English best for texts up to fourth-grade level. For grading texts aimed at older children for readability, the Dale-Chall test is more suitable.
+		    			<a href="https://en.wikipedia.org/wiki/Spache_readability_formula">Read more</a>
+	    			</p> -->
+		      	</div>
+		      	<div class="new_dale_chall_score">
+		      		<p>
+		      		<i  class="fas fa-smile-wink"></i>
+		      		New Dale-Chall Score <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+		      		<!-- <p class="result_meaning">
+		    			Based on a familiar word list, this analyzes how readable a text is for fourth grade and up. As well as being useful in elementary education, it also has important use in the accessibility of content.
+		    			<a href="https://en.wikipedia.org/wiki/Dale%E2%80%93Chall_readability_formula">Read more</a>
+	    			</p> -->
+		      	</div>
+		      	<div class="Lix_readability">
+		      		<p>
+		      		<i class=""></i>
+		      		Lix Readability <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+		      	<!-- 	<p class="result_meaning">
+		    			Lix is calculated with word length and sentence length as variables. It was formulated to take into account the readability of non-English reading materials.
+		    			<a href="https://en.wikipedia.org/wiki/Lix_(readability_test)">Read more</a>
+	    			</p> -->
+		      	</div>
+		      	<div class="lensear_write">
+		      		<p>
+		      		<i class=""></i>
+		      		Lensear Write <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+		      		
+		      	</div>
+		      	<!-- <h3 class="readibilty_heading">Arabic Scores</h3> -->
+		      	<hr>
+	      	 <div class="arabic_AARIs">
+      	 		<div class="arabic_ARI2">
+		      		<p>
+		      		<i class=""></i>
+		      		ARI2 <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+		      		
+		      	</div>
+	      	 	<div class="arabic_AARI">
+		      		<p>
+		      		<i class=""></i>
+		      		AARI <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+		      		
+		      	</div>
+	      	 	<div class="arabic_Al_Heeti">
+		      		<p>
+		      		<i class=""></i>
+		      		Al_Heeti <span class="r_scor"></span>
+		      		<span class="m_meaning"></span>
+		      		</p>
+		      		
+		      	</div>
+	      	 </div>
 		    </div>
-
 		     <div id="menu3" class="container tab-pane fade readability_issues"><br>
-		     	<!-- h3 style="color: #fff">Language Issues</h3>
+		     <!-- 	<h3 class="readibilty_heading">Language Issues</h3>
 		    	<hr>
-		    	<p class="spelling_issues">
-		      		<i class="fas fa-smile-wink"></i>
-		      		Spelling Issues 
-		      	</p>
- -->
-		      <!-- 	<p class="grammar_issues">
-		      		<i class="fas fa-smile-wink"></i>
-		      		Grammar Issues  
-		      	</p> -->
+		    	<div  class="spelling_issues dark_gray">
+		      		<i style="visibility: hidden;" class="fas fa-smile-wink"></i>
+		      		Spelling Issues  <span class="non_percentage"></span>
 
-		      	<h3 style="color: #fff">Readability Issues</h3>
+		      	</div>
+		      	<div class="grammar_issues dark_gray">
+		      		<i style="visibility: hidden;" class="fas fa-smile-wink"></i>
+		      		Grammar Issues  <span class="non_percentage"></span>
+		 
+		      	</div> -->
+
+		      	<h3 class="readibilty_heading">Readability Issues</h3>
 		    	<hr>
-	    		<p class="s_g_30s">
+	    		<div class="s_g_30s">
 		      		<i class="fas fa-smile-wink"></i>
-		      		Sentences > 30 Syllables  
-		      	</p>
-	      		<p class="s_g_20s">
-		      		<i class="fas fa-smile-wink"></i>
-		      		Sentences > 20 Syllables 
-		      	</p>
-	      		<p class="w_g_4s">
-		      		<i class="fas fa-smile-wink"></i>
-		      		Words > 4 Syllables  
-		      	</p>
-	      		<p class="w_g_12l">
-		      		<i class="fas fa-smile-wink"></i>
-		      		Words > 12 Letters  
-		      	</p>
-		      	<h3 style="color: #fff">Writing Style Issues</h3>
+		      		Sentences > 30 Syllables  <span class="non_percentage"></span>
+		      	<!-- 	<p class="result_meaning">
+		    			Long sentences can be difficult to keep track of and too many can be fatiguing for the user. Try to use mostly short sentences in your writing.
+	    			</p> -->
+		      	</div>
+	      		<div class="s_g_20s">
+		      		<i class=""></i>
+		      		Sentences > 20 Syllables <span class="non_percentage"></span>
+		      		<!-- <p class="result_meaning">
+		    			Long sentences can be difficult to keep track of and too many can be fatiguing for the user. Try to use mostly short sentences in your writing.
+	    			</p> -->
+		      	</div>
+	      		<div class="w_g_4s">
+		      		<i class=""></i>
+		      		Words > 4 Syllables  <span class="non_percentage"></span>
+		      		<!-- <p class="result_meaning">
+		    			Long words which contain a lot of syllables are hard to read and to say. Try to use short words where possible.
+	    			</p> -->
+		      	</div>
+	      		<div class="w_g_12l">
+		      		<i class=""></i>
+		      		Words > 12 Letters  <span class="non_percentage"></span>
+		      		<!-- <p class="result_meaning">
+		    			Long words which contain a lot of letters are hard to read and to say. Try to use short words where possible.
+	    			</p> -->
+		      	</div>
+
+		      	<h3 class="readibilty_heading">Writing Style Issues</h3>
 		    	<hr>
-		    	<p class="passive_voice_count">
-		      		<i class="fas fa-smile-wink"></i>
-		      		Passive Voice Count 
-		      	</p>
+		    	<div class="passive_voice_count">
+		      		<i class=""></i>
+		      		Passive Voice Count <span class="r_scor"></span>
+		      		<!-- <p class="result_meaning">
+		    			Passive voice can make what you are writing less engaging to the reader, compared to the active voice. For example, instead of "the door was closed by the man", it might be better to say "the man closed the door".
+		    			<a href="https://en.wikipedia.org/wiki/English_passive_voice">Read more</a>
+	    			</p> -->
+		      	</div>
+		    
+		      <!-- 	<div class="adverb_count dark_gray">
+		      	<i style="visibility: hidden;" class="fas fa-smile-wink"></i>
+		      		Adverb Count  <span class="non_percentage"></span>
+		      	
+		      	</div> -->
+		      	  <!-- 	<div  class="cliche_count dark_gray">
+		      		<i style="visibility: hidden;" class="fas fa-smile-wink"></i>
+		      		Cliché Count  <span class="non_percentage"></span>
+
+		      	</div> -->
 		      	
 		      	<div class="text_density_issues">
-		      	<h3 style="color: #fff">Text Density Issues</h3>
-		    	<hr>
-	      		<p class="characters_per_word">
-		      		<i class="fas fa-smile-wink"></i>
-		      		Characters per Word
-		      	</p>
-		      	<p class="syllables_per_word">
-		      		<i class="fas fa-smile-wink"></i>
-		      		Syllables per Word
-		      	</p>
-		      	<p class="words_per_sentence">
-		      		<i class="fas fa-smile-wink"></i>
-	      			Words per Sentence
-		      	</p>
-		      	<p class="words_per_paragraph">
-		      		<i class="fas fa-smile-wink"></i>
-		      		Words per Paragraph
-		      	</p>
-		      		<p class="sentences_per_paragraph">
-		      		<i class="fas fa-smile-wink"></i>
-	      			Sentences per Paragraph
-		      	</p>
+			      	<h3 class="readibilty_heading">Text Density Issues</h3>
+			    	<hr>
+		      		<div class="characters_per_word">
+			      		<i class=""></i>
+			      		Characters per Word <span class="r_scor"></span>
+			      	</div>
+			      	<div class="syllables_per_word">
+			      		<i class=""></i>
+			      		Syllables per Word <span class="r_scor"></span>
+			      	</div>
+			      	<div class="words_per_sentence">
+			      		<i class=""></i>
+		      			Words per Sentence <span class="r_scor"></span>
+			      	</div>
+			      	<div class="words_per_paragraph">
+			      		<i class=""></i>
+			      		Words per Paragraph <span class="r_scor"></span>
+			      	</div>
+		      		<div class="sentences_per_paragraph">
+			      		<i class=""></i>
+		      			Sentences per Paragraph <span class="r_scor"></span>
+			      	</div>
 		      	</div>
 		    </div>
+
+		    <div id="menu4" class="container tab-pane fade segmentation"><br>
+		      	<div class="arabic_seg">
+		      	<h3 class="readibilty_heading">Segmentation</h3>
+		      	<p class="api_result"></p>
+		     <!--  	<p class="add_span_before result_meaning">
+		    			Paragraphs are defined as ending with a line break.
+	    		</p> -->
+		      	</div>
+		      	<div class="arabic_lemma">
+		      	<h3 class="readibilty_heading">Lemmatization</h3>
+		      	<p class="api_result"></p>
+		     <!--  	<p class="add_span_before result_meaning">
+		    			Paragraphs are defined as ending with a line break.
+	    		</p> -->
+		      </div>
+
+		      	<div class="arabic_SpCH">
+		      	<h3 class="readibilty_heading">Spell Check</h3>
+		      	<p class="api_result"></p>
+		     <!--  	<p class="add_span_before result_meaning">
+		    			Paragraphs are defined as ending with a line break.
+	    		</p> -->
+		      	</div>
+
+		      	<!-- <div class="arabic_Diac">
+		      	<h3 class="readibilty_heading">Diacritize</h3>
+		      	<p class="api_result"></p>
+		 
+		      	</div> -->
+
+		      	<div class="arabic_Diac2">
+		      	<h3 class="readibilty_heading">Diacritize</h3>
+		      	<p class="api_result"></p>
+		     <!--  	<p class="add_span_before result_meaning">
+		    			Paragraphs are defined as ending with a line break.
+	    		</p> -->
+		      	</div>
+
+		    </div>
+
+		  <!--   <div id="menu5" class="container tab-pane fade lemmatization"><br>
+		      	
+		      		
+		    </div> -->
+		     <!-- <div id="menu6" class="container tab-pane fade spellcheck"><br>
+		      
+		      		
+		    </div>
+ -->
+		   <!--   <div id="menu7" class="container tab-pane fade diacritize"><br>
+		      	
+		      		
+		    </div> -->
+		    <!-- <div id="menu8" class="container tab-pane fade diacritize_v2"><br>
+		      	
+		      		
+		    </div> -->
+
+
 
 		    </div>
 		  </div>
 		</div>
 		</div>
 	</div>
-</div>
+
 	
 {% endblock content %}  

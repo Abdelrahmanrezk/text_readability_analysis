@@ -19,10 +19,9 @@ dic = Pyphen(lang="en")
 
 # tool = language_tool_python.LanguageTool('en-US')
 
-
 def removePunctuation(text):
     result = ""
-
+ 
     for char in text:
         if char in (".",",","!","?","؟","،","\",""/","\"","#","$","%","&","'","(",")","*","+",":",";","<",">","=","[","]","^","_","`","{","}","|","~"):
             continue
@@ -39,6 +38,7 @@ def removeSpace(text):
         result+=char
     return result
 
+
 def removeDigits(text):
     result=""
     for i in text:
@@ -47,53 +47,49 @@ def removeDigits(text):
         result+=i
     return result
 
+
 def characterCount(text):
     count=0
     text=removePunctuation(text)
+    text = re.sub('[ًٌٍَُِّْـ]+', '', text)
     for char in text:
         if (char.isdigit() or char.isspace()):
             continue;
         count+=1
+    #print("Character Count is ",count)
     return count
-
-
-
 
 def wordCount(text):
     count=0
     text=removePunctuation(text)
     words=word_tokenize(text)
+    #print(words)
     for i in words:
         if(i.isdigit()):
             continue;
         count+=1
+    #print("Word Count is ",count)
     return count
 
 
 
-def count_complex_word(text):
-    complex_words = 0
-    text=removePunctuation(text)
-    for i in text.split(' '):        
-        syllable_word = dic.inserted(i)
-        syllable_dash = re.findall('-', syllable_word)
-        if (len(syllable_dash) >= 2):
-            complex_words +=1
-    return max(1, complex_words)
 
 
 def nsyl(word):
     try:
+        #print(d[word.lower()])
         li=[]
+        #print(word,"-",d[word.lower()])
         for x in d[word.lower()][0]:
             for y in x:
+                #print(y)
                 if(y[-1].isdigit()):
                     li.append(y)
+        #print(word,":",len(li))
         return(len(li))
     except:
+        #if word not found in cmudict
         return(syllables(word))
-
-
 
 
 def syllables(word):
@@ -112,6 +108,7 @@ def syllables(word):
         count += 1
     if count == 0:
         count += 1
+    #print("Count:",count)
     return count
 
 
@@ -120,10 +117,10 @@ def syllableCount(text):
     num=0
     text=removePunctuation(text)
     words=word_tokenize(text)
+    #print(words)
     for i in words:
         count=count+nsyl(i)
     return(count)
-
 
 
 def singleSyllableWord(text):
@@ -135,8 +132,12 @@ def singleSyllableWord(text):
         count=0
         count=nsyl(i)
         if(count==1):
+            #print(i)
             result=result+1
+    #print(result)
+    #print("Single Syllable Words are: ",result)
     return result
+
 
 
 def uniqueWordCount(text):
@@ -147,24 +148,50 @@ def uniqueWordCount(text):
     uniqueWords=[]
     for i in words:
         if i not in uniqueWords:
+            #print(i)
             uniqueWords.append(i)
     for word in uniqueWords:
         if word.isdigit():
             continue;
         count+=1
+    #print("Unique Count is ",count)
     return count
 
 
 def sentenceCount(text):
-    sentence=sent_tokenize(text)
-    count=len(sentence)
-    return count
-
+  count = 0
+  text2 = text + "\n"
+  text2 = text2.replace(".","\n")
+  text2 = text2.replace("!","\n")
+  text2 = text2.replace("?","\n")
+  text2 = text2.replace("؟","\n")
+  lines = text2.split("\n")
+  for line in lines:
+    line = line.strip()
+    if len(line) == 0:
+      continue
+    count+=1   
+    if count == 0:
+      count = 1 
+  return count
 
 
 def paragraphCount(text):
     count=  [line.strip() for line in text.split('\n') if len(line.strip()) > 0]
+    #print("Paragraph Count is",len(count))
     return len(count)
+
+
+
+def count_complex_word(text):
+    complex_words = 0
+    text=removePunctuation(text)
+    for i in text.split(' '):        
+        syllable_word = dic.inserted(i)
+        syllable_dash = re.findall('-', syllable_word)
+        if (len(syllable_dash) >= 2):
+            complex_words +=1
+    return max(1, complex_words)
 
 
 def ReadingTime(text):
@@ -176,213 +203,236 @@ def ReadingTime(text):
 
 
 
+
+
+def ReadingTime(text):
+    word = wordCount(text)
+    div_wordCount = word / 225
+    second,minute=math.modf(div_wordCount)
+    if second >= 0.60:
+      minute +=1
+      second-=0.60
+    #second=round((second*0.60),2)
+    #print("Reading Time is",minute+second);
+    return int(minute),int(round(second,2)*100)
+ 
 def SpeakingTime(text):
     word = wordCount(text)
     speakingRate=125
     time=word/speakingRate
     second,minute=math.modf(time)
-    second=round(second*0.60,2)
-    return (minute+second)
+    if second >= 0.60:
+      minute +=1
+      second-=0.60
+    #second=round((second*0.60),2)
+    #print("Reading Time is",minute+second);
+    return int(minute),int(round(second,2)*100)
 
 
-
-def FKRA(txt):
-    word = wordCount(txt)
-    sentence =sentenceCount(txt)
-    syllable =syllableCount(txt) 
-    ASL = word/sentence
-    ASW = syllable/word
+def FKRA(text):
+    word = wordCount(text)
+    sentence =sentenceCount(text)
+    syllable =syllableCount(text) 
+    ASL = float(word)/sentence
+    ASW = float(syllable)/word
     FKRA = (0.39 * ASL) + (11.8 * ASW) - 15.59
     return round(FKRA,2)
 
-
-def GFI(txt):
-    word = wordCount(txt)
-    sentence = sentenceCount(txt)
-    c_word = count_complex_word(txt)
-
-    GFI = 0.4 * ((word / sentence) + 100 * (c_word / word))
+def GFI(text):
+    word = wordCount(text)
+    sentence = sentenceCount(text)
+    c_word = count_complex_word(text)
+    GFI = 0.4 * ((float(word) / sentence) + 100 * (float(c_word) / word))
     return round(GFI,2)
 
 
-
-
-def CLI(txt):
-    txt = txt.lower()
-    char = characterCount(txt)
-    word = wordCount(txt)
-    sentence = sentenceCount(txt)
-    L = (char / word) * 100
-    S = (sentence / word) * 100
+def CLI(text):
+    text = text.lower()
+    char = characterCount(text)
+    word = wordCount(text)
+    sentence = sentenceCount(text)
+    L = (float(char) / word) * 100
+    S = (float(sentence) / word) * 100
     CLI = (0.0588 * L) - (0.296 * S) - 15.8
     return round(CLI,2)
 
 
-def SMOGI(txt):
-    txt = txt.lower()
-    sentence = sentenceCount(txt)
-    plosyllable = count_complex_word(txt)
-    SMOGI = 1.0430 * (math.sqrt(plosyllable * (30 / sentence))) + 3.1291
+def SMOGI(text):
+    text = text.lower()
+    sentence = sentenceCount(text)
+    plosyllable = count_complex_word(text)
+    SMOGI = 1.0430 * (math.sqrt(plosyllable * (30 / float(sentence)))) + 3.1291
     return round(SMOGI,2)
 
 
-
-def ARI(txt):
-    txt = txt.lower()
-    char =characterCount(txt)
-    word = wordCount(txt)
-    sentence =sentenceCount(txt)
-    ARI = (4.71 * (char / word)) + (.5 * (word / sentence)- 21.43)
+def ARI(text):
+    text = text.lower()
+    char =characterCount(text)
+    word = wordCount(text)
+    sentence =sentenceCount(text)
+    ARI = (4.71 * (float(char) / word)) + (.5 * (float(word) / sentence)- 21.43)
     return round(ARI , 2)
 
 
-def FORCAST(txt):
-    syll=singleSyllableWord(txt)
-    c_word = count_complex_word(txt)
-    div=round( (wordCount(txt)*10)/150,2)
-    GL = 20 - (syll/ div)
+def FORCAST(text):
+    syll=singleSyllableWord(text)
+    c_word = count_complex_word(text)
+    div=round((float(wordCount(text))*10)/150,2)
+    GL = 20 - (float(syll)/ div)
     return round(GL,2)
 
-
-
-def PSKG(txt):
-    word = wordCount(txt)
-    sentence = sentenceCount(txt)
-    syllable = syllableCount(txt)
-    ASL = word / sentence
-    NS = ((syllable/word) * 0.0455*100) 
+def PSKG(text):
+    word = wordCount(text)
+    sentence = sentenceCount(text)
+    syllable = syllableCount(text)
+    ASL = float(word) / sentence
+    NS = ((float(syllable)/word) * 0.0455*100) 
     GL = (0.0778 * ASL) + NS - 2.2029
     return round(GL,2)
 
-
-def RIX(txt):
+def RIX(text):
     count = 0
-    sentence = sentenceCount(txt)
-    for x in txt.split(" "):
+    sentence = sentenceCount(text)
+    for x in text.split(" "):
         if characterCount(x) > 4:
             count+=1
-    return round((count / sentence ),2)
+    return round(float(count) / sentence,2)   
 
-def FRE(txt):
-    sentence = sentenceCount(txt)
-    word = wordCount(txt)
-    syllable = syllableCount(txt)
-    ASL = word / sentence
-    ASW = syllable / word
+
+def FRE(text):
+    sentence = sentenceCount(text)
+    word = wordCount(text)
+    syllable = syllableCount(text)
+    ASL = float(word) / sentence
+    ASW = float(syllable) / word
     RE = 206.835 - (1.015 * ASL) - (84.6 * ASW)
     return round(RE,1)
 
-def NDC(txt):
-    c_word = count_complex_word(txt)
-    word = wordCount(txt)
-    sentence = sentenceCount(txt)
-    PDW = round(c_word / word,2)*100
-    ASL = word / sentence
+
+def NDC(text):
+    c_word = count_complex_word(text)
+    word = wordCount(text)
+    sentence = sentenceCount(text)
+    PDW = round(float(c_word) / word,2)*100
+    ASL = float(word) / sentence
     if PDW > 5:
         RS = ((0.1579 * PDW) + (0.0496 * ASL)) + 3.6365
     else:
         RS = (0.1579 * PDW) + (0.0496 * ASL)
     return round(RS,1)
 
-def SPACHE(txt):
-    c_word = count_complex_word(txt)
-    word = wordCount(txt)
-    sentence = sentenceCount(txt)
-    PDW = round(c_word / word,2)*100
-    ASL = word / sentence
+
+def SPACHE(text):
+    c_word = count_complex_word(text)
+    word = wordCount(text)
+    sentence = sentenceCount(text)
+    PDW = round(float(c_word) / word,2)*100
+    ASL = float(word) / sentence
     SP = ((0.141 *ASL) + (0.086 * PDW)+0.839)
     return round(SP,1)
 
+
+
 #Sentences > 30 Syllables
-def s_g_30s(txt):
+def s_g_30s(text):
     count =0
-    sentence=sent_tokenize(txt)
+    sentence=sent_tokenize(text)
     for x in sentence:
+        #print(syllableCount(x))
         if syllableCount(x) > 30:
             count+=1
-    return count
+    return count   
+
 
 #Sentences > 20 Syllables
-def s_g_20s(txt):
+def s_g_20s(text):
     count =0
-    sentence=sent_tokenize(txt)
+    sentence=sent_tokenize(text)
     for x in sentence:
+        #print(syllableCount(x))
         if syllableCount(x) > 20:
+            count+=1
+    return count   
+
+#Words > 4 Syllables
+def w_g_4s(text):
+    count =0
+    words=word_tokenize(text)
+    for x in words:
+        #print(syllableCount(x))
+        if syllableCount(x) >= 4:
             count+=1
     return count  
 
-#Words > 4 Syllables
-def w_g_4s(txt):
+#Words > 12 Letters
+def w_g_12l(text):
     count =0
-    words=word_tokenize(txt)
+    words=word_tokenize(text)
     for x in words:
-        if syllableCount(x) >= 4:
+        #print(len(x))
+        if len(x) > 12:
             count+=1
     return count 
 
-def w_g_12l(txt):
-    count =0
-    words=word_tokenize(txt)
-    for x in words:
-        if len(x) > 12:
-            count+=1
-    return count
 
 # Characters Per Word
-def CPW(txt):
-  WordCount=wordCount(txt)
-  CharacterCount=characterCount(txt)
-  CharactersPerWord=round(CharacterCount/WordCount,1)
+def CPW(text):
+  WordCount=wordCount(text)
+  CharacterCount=characterCount(text)
+  CharactersPerWord=round(float(CharacterCount)/WordCount,1)
   return CharactersPerWord
 
+
 #Syllables Per Word
-def SPW(txt):
-  WordCount=wordCount(txt)
-  SyllableCount= syllableCount(txt)
-  SyllablesPerWord=round(SyllableCount/WordCount,1)
+def SPW(text):
+  WordCount=wordCount(text)
+  SyllableCount= syllableCount(text)
+  SyllablesPerWord=round(float(SyllableCount)/WordCount,1)
   return SyllablesPerWord
 
 #Words Per Sentence
-def WPS(txt):
-  WordCount=wordCount(txt)
-  SentenceCount=sentenceCount(txt)
-  WordsPerSentence=round(WordCount/SentenceCount,1)
+def WPS(text):
+  WordCount=wordCount(text)
+  SentenceCount=sentenceCount(text)
+  WordsPerSentence=round(float(WordCount)/SentenceCount,1)
   return WordsPerSentence
+ 
 
 #Words Per Paragraph
-def WPP(txt):
-  WordCount=wordCount(txt)
-  ParagraphCount=paragraphCount(txt)
-  WordsPerParagraph=round(WordCount/ParagraphCount,1)
+def WPP(text):
+  WordCount=wordCount(text)
+  ParagraphCount=paragraphCount(text)
+  WordsPerParagraph=round(float(WordCount)/ParagraphCount,1)
   return WordsPerParagraph
 
 #Sentences Per Paragraph
-def SPP(txt):
-  SentenceCount=sentenceCount(txt)
-  ParagraphCount=paragraphCount(txt)
-  SentencePerParagraph=round(SentenceCount/ParagraphCount,1)
+def SPP(text):
+  SentenceCount=sentenceCount(text)
+  ParagraphCount=paragraphCount(text)
+  SentencePerParagraph=round(float(SentenceCount)/ParagraphCount,1)
   return SentencePerParagraph
 
-def w_g_6l(txt):
+def w_g_6l(text):
     count =0
-    words=word_tokenize(txt)
+    words=word_tokenize(text)
     for x in words:
         #print(len(x))
         if len(x) > 6:
             count+=1
     return count 
 
-def LIX(txt):
-  WordCount=wordCount(txt)
-  SentenceCount=sentenceCount(txt)
-  LongWords=w_g_6l(txt)
-  percentageOfLongWords=(LongWords/WordCount)*100
-  avgLengthOfSentence=WordCount/SentenceCount
+def LIX(text):
+  WordCount=wordCount(text)
+  SentenceCount=sentenceCount(text)
+  LongWords=w_g_6l(text)
+  percentageOfLongWords=(float(LongWords)/WordCount)*100
+  avgLengthOfSentence=float(WordCount)/SentenceCount
   result=round(percentageOfLongWords+avgLengthOfSentence,0)
   return result
 
 def nonWordCount(text):
     regex="[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$"    #checks for email address
+    #text=removePunctuation(text)
     emails = re.findall("([a-zA-Z0-9]+[\._]?@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)", text)
     print("Non word: ",emails)
     return(len(emails))
@@ -393,7 +443,9 @@ def LensearWrite(text):
   words=word_tokenize(text)
   SentenceCount=sentenceCount(text)
   wordcount=wordCount(text)
-  ratio=100/wordcount
+  #hardword=3
+  #easyword=1
+  ratio=100/float(wordcount)
   hardword=ratio*3
   easyword=ratio*1
   Score=0
@@ -402,7 +454,7 @@ def LensearWrite(text):
       Score+=easyword
     if nsyl(word) >=3:
       Score+=hardword
-  preResult=(Score/SentenceCount)
+  preResult=(Score/float(SentenceCount))
   if preResult > 20:
     result=round((preResult/2),1)
   else:
@@ -419,6 +471,7 @@ def take_data_to_shower(text):
             continue
         if char.isalnum():
             alphanumeric += char 
+    #print(alphanumeric)
     return alphanumeric
 
 def spellingIssues(t):
@@ -465,7 +518,6 @@ def isPassive(sentence):
                 return True
     return False
 
-
 def passiveCount(text):
     sentences= nltk.sent_tokenize(text)
     count=0
@@ -474,3 +526,4 @@ def passiveCount(text):
         if(val==True):
             count+=1
     return count
+ 

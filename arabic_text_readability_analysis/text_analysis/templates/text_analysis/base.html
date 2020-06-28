@@ -13,6 +13,10 @@
      <link rel="stylesheet"   href=" {% static "css/owl.carousel.min.css" %}">
      <link rel="stylesheet" href=" {% static "css/owl.theme.default.min.css" %}">
      <link rel="stylesheet" href=" {% static "css/all.css" %}">
+     <link
+  rel="stylesheet"
+  href="https://unpkg.com/tippy.js@6/animations/scale.css"
+/>
     <link rel="stylesheet" href=" {% static "css/style.css" %}">
 
   </head>
@@ -32,8 +36,11 @@
         </div>
        </div>
         <div class="nav_list">
+           <div class="navbar-brand">
+             <img src="{% static "images/logo.png" %}" alt="QCRI Logo">
+           </div>
             <div class="right">
-            
+           
           </div>
             <div class="left">
               
@@ -48,7 +55,7 @@
             </div>
         </div>
       </header>
-     
+      <!-- <button >Text</button> -->
       <!-- End Our NavBar  Style -->
 
   <!-- start and end of any page content then with any base there is upper navbar  and bottom footer -->
@@ -63,11 +70,16 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
     <script src=" {% static "js/owl.carousel.min.js" %} "></script>
     <script src=" {% static "js/all.js" %}"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
  <!--    <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE1Yy2UrIJcUjeST946K0Q1bmxUhZCvKE&callback=initMap">
     </script> -->
 
     <script src=" {% static "js/script.js" %}"></script>
+<!--     <script type="text/javascript">
+      new Tippy('.tippy-tooltip');
+    </script> -->
 
 
   </body>
