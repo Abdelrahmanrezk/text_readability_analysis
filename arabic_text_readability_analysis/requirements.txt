@@ -14,7 +14,7 @@ imagesize==1.2.0
 indic-nlp-library==0.6
 indicnlp==0.0.1
 inexactsearch==1.0.2
-Jinja2==2.11.2
+Jinja2==2.11.3
 joblib==0.14.1
 kiwisolver==1.2.0
 language-tool-python==2.2.1
